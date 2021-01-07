@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <title>Email Service</title>
+   </head>
+   <body>
+      <nav class="navbar navbar-dark bg-dark">
+         <a class="navbar-brand" href="#">Email Service</a>
+      </nav>
+      <div class="container p-4">
+         <h2>Compose</h2>
+         <hr/>
+         <form>
+            <div class="form-group">
+               <label for="from_email">From Email address</label>
+               <input type="email" class="form-control" id="from_email" name="from_email" placeholder="Enter from email">
+            </div>
+            <div class="form-group">
+               <label for="to_email">To Email address</label>
+               <input type="email" class="form-control" id="to_email" name="to_email" placeholder="Enter from email">
+            </div>
+            <div class="form-group">
+               <label for="subject">Subject</label>
+               <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter the subject">
+            </div>
+            <div class="form-group">
+               <label for="content">Content</label>
+               <textarea class="form-control" id="content" name="content" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Send</button>
+            <button type="reset" class="btn btn-danger">Clear</button>
+         </form>
+      </div>
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <!-- Custom JS -->
+      <script>
+         function handleSubmit(event) {
+           // Prevent default event.
+           event.preventDefault();
+
+           // Get data from the form.
+           const data = new FormData(event.target);
+           const payload = {
+             from_email: data.get('from_email'),
+             to_email: data.get('to_email'),
+             subject: data.get('subject'),
+             content: data.get('content'),
+           }
+
+           // Perform API request.
+           fetch('/api/email/', {
+             method: 'post',
+             headers: {
+               "Content-type": "application/json; charset=UTF-8"
+             },
+             body: JSON.stringify(payload)
+           }).then(function(response) {
+             return response;
+           })
+
+           // Reset the form
+           event.target.reset();
+         }
+
+         const form = document.querySelector('form');
+         form.addEventListener('submit', handleSubmit);
+      </script>
+   </body>
+</html>
